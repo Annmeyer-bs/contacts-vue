@@ -25,7 +25,7 @@
           <tbody>
           <tr v-for="contact in contacts" :key="contact.name">
             <th scope="row"><input type="checkbox" :value="contact.name" v-model="selected"></th>
-            <td></td>
+            <td class="td-img"><img src="@/assets/img-not-found.png"></td>
             <td>{{ contact.name }}</td>
             <td>{{ contact.email }}</td>
             <td>{{ contact.adress }}</td>
@@ -35,26 +35,44 @@
         </table>
       </div>
     </div>
-    <div v-show="active" class="modal-dialog modal-dialog-centered">
-      <div class="modal-mask">
+      <div v-show="active" class="modal-dialog modal-dialog-centered">
+        <div class="modal-mask"></div>
         <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-              <button type="button" @click="closeModal" class="btn-close" data-bs-dismiss="modal"
-                      aria-label="Close"></button>
+          <form @submit.prevent="onSubmit">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Create Contact</h5>
+                <button type="button" @click="closeModal" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="modal-text">
+                  <div class="modal-text-name">
+                    <label>Name</label>
+                    <input type="text" v-model="name" placeholder="Please enter your name">
+                  </div>
+                  <div class="modal-text-email">
+                    <label>Email</label>
+                    <input type="text" v-model="email" placeholder="Please enter your email">
+                  </div>
+                  <div class="modal-text-adress">
+                    <label>Adress</label>
+                    <input type="text" v-model="adress" placeholder="Please enter your adress">
+                  </div>
+                </div>
+                <div class="modal-img">
+                  <img src="@/assets/img-not-found.png">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button @click="closeModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE
+                </button>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg"></i> SAVE CHANGES</button>
+              </div>
             </div>
-            <div class="modal-body">
-              ...
-            </div>
-            <div class="modal-footer">
-              <button @click="closeModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Understood</button>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
-    </div>
   </section>
 </template>
 
@@ -80,7 +98,10 @@ export default {
         }
       ],
       selected: [],
-      selectAll: false
+      selectAll: false,
+      name: '',
+      nameState: null,
+      submittedNames: []
     };
   },
   methods: {
@@ -97,6 +118,21 @@ export default {
     },
     closeModal() {
       this.active = false;
+    },
+    onSubmit() {
+      if (this.name.trim() && this.email.trim() && this.adress.trim()) {
+        this.contacts.push( {
+          name: this.name,
+          photo: "",
+          email: this.email,
+          adress: this.adress,
+          created: new Date()
+        })
+        this.name = ''
+        this.email = ''
+        this.adress = ''
+        this.closeModal()
+      }
     }
   }
 
@@ -117,6 +153,7 @@ export default {
 
 .container__content {
   border: 2px solid black;
+  height: 500px;
 }
 
 .container__header {
@@ -148,4 +185,80 @@ p {
   max-height: 800px;
 }
 
+.table > :not(:first-child) {
+  border-top: 2px solid #f1f1f1;
+}
+
+thead {
+  background: #fafafa;
+}
+
+/*  ---modal-- */
+.modal-mask {
+  opacity: .8;
+  background-color: #000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  width: 100vw;
+  height: 100vh;
+}
+
+.modal-dialog {
+  max-width: 700px;
+  margin: 8% 13%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1055;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  outline: 0;
+}
+
+.modal-header, .modal-footer {
+  border: none;
+}
+
+.modal-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.modal-img {
+  width: 140px;
+  height: 140px;
+}
+
+img {
+  max-width: 100%;
+}
+
+.td-img {
+  width: 3%;
+}
+
+td img {
+  max-width: 80%;
+}
+
+input {
+  margin: 20px;
+}
+
+.table > :not(caption) > * > * {
+  padding: 0;
+  vertical-align: middle;
+  text-align: center;
+}
 </style>

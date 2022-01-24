@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <headers></headers>
-    <contacts></contacts>
-
+    <contacts> @add-contact="addContact"</contacts>
   </div>
 </template>
 
@@ -13,7 +12,7 @@ import Contacts from './components/Contacts'
 
 export default {
   name: 'app',
-  components: { Headers, Contacts },
+  components: { Headers, Contacts},
   data() {
     return {
 
@@ -23,6 +22,7 @@ export default {
 </script>
 
 <style>
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

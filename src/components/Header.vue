@@ -68,7 +68,6 @@ a {
 }
 .dropdown-toggle::after {
   margin-left: 10px;
-  color: #7f4c00;
 }
 hr {
   margin: .75rem .15rem .10rem .20rem;
@@ -81,4 +80,5 @@ hr {
   background: #7f4c00;
   padding: 0 20px;
 }
+
 </style>

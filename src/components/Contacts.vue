@@ -16,20 +16,39 @@
           <tr>
             <th scope="col"><input type="checkbox" v-model="selectAll" @click="select"></th>
             <th scope="col"></th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Adress</th>
-            <th scope="col">Created</th>
+            <th scope="col"><div class="th-item">Name <div class="icon-group">
+              <i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i>
+            </div></div></th>
+            <th scope="col"><div class="th-item">Email <div class="icon-group">
+              <i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i>
+            </div></div></th>
+            <th scope="col"><div class="th-item">Adress <div class="icon-group">
+              <i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i>
+            </div></div></th>
+            <th scope="col"><div class="th-item">Created <div class="icon-group">
+              <i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i>
+            </div></div></th>
+            <th scope="col"></th>
           </tr>
           </thead>
           <tbody>
-          <tr v-for="contact in contacts" :key="contact.name">
+          <tr v-for="(contact, index) in contacts" :key="contact.name">
             <th scope="row"><input type="checkbox" :value="contact.name" v-model="selected"></th>
             <td class="td-img"><img src="@/assets/img-not-found.png"></td>
             <td>{{ contact.name }}</td>
             <td>{{ contact.email }}</td>
             <td>{{ contact.adress }}</td>
             <td>{{ contact.created }}</td>
+            <td><div class="btn-group dropend">
+              <button @click="toggle" type="button" class="btn" id="dropdownMenuOffset">
+                <i class="bi bi-three-dots-vertical"></i>
+              </button>
+              <ul v-show="activeDots" v-bind:class="{active: activeDots}" class="dropdown-menu">
+                <li><a class="dropdown-item" href="#"><i class="bi bi-list"></i>  View</a></li>
+                <li v-on:click="removeContact(index)" ><a class="dropdown-item" href="#"><i class="bi bi-x-lg red"></i>  Delete</a></li>
+              </ul>
+            </div>
+            </td>
           </tr>
           </tbody>
         </table>
@@ -81,6 +100,7 @@ export default {
   data() {
     return {
       active: false,
+      activeDots: false,
       contacts: [
         {
           name: "John Doe",
@@ -90,21 +110,27 @@ export default {
           created: "email@example.com"
         },
         {
-          name: "Jone Doe",
+          name: "Lone Doe",
           photo: "",
-          email: "email2@example.com",
+          email: "lmail2@example.com",
           adress: "Ukraine, Kiev",
           created: "email@example.com"
         }
       ],
+      columnsContacts: ["name", "email", "adress"],
       selected: [],
       selectAll: false,
       name: '',
+      email: '',
+      adress: '',
       nameState: null,
       submittedNames: []
     };
   },
   methods: {
+    toggle() {
+      this.activeDots = !this.activeDots;
+    },
     select() {
       this.selected = [];
       if (!this.selectAll) {
@@ -133,7 +159,10 @@ export default {
         this.adress = ''
         this.closeModal()
       }
-    }
+    },
+    removeContact(index) {
+			this.contacts.splice(index, 1);
+		}
   }
 
 }
@@ -157,7 +186,6 @@ export default {
 }
 
 .container__header {
-
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -261,4 +289,22 @@ input {
   vertical-align: middle;
   text-align: center;
 }
+.icon-group {
+  display: flex;
+  flex-direction: column;
+  color: #f1f1f1;
+}
+
+.th-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  border: none;
+}
+.active{
+  display: block;
+  margin: 0 30px;
+}
+
 </style>

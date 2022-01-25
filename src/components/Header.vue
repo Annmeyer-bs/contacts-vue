@@ -6,7 +6,7 @@
         <button @click="toggle" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="bi bi-person-circle"></i><p>Your name</p>
         </button>
-        <ul v-if="active" class="dropdown-menu active" aria-labelledby="dropdownMenuButton1">
+        <ul v-if="active" v-bind:class="{active}" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li><a class="dropdown-item" href="#">Registration</a></li>
           <li><a class="dropdown-item" href="#">Authorization</a></li>
         </ul>
@@ -57,14 +57,17 @@ export default {
   color: white;
   margin: 0 0 0 10px;
 }
+.dropdown-menu li{
+  min-width: 150px;
+}
 .dropdown-toggle{
   display: flex;
   align-items: center;
   background: #7f4c00;
 }
 a {
-  flex-direction: row;
-  display: flex;
+  color: white;
+  min-width: 150px;
 }
 .dropdown-toggle::after {
   margin-left: 10px;
@@ -79,6 +82,7 @@ hr {
   display: block;
   background: #7f4c00;
   padding: 0 20px;
+
 }
 
 </style>

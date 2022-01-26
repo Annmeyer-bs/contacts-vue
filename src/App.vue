@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <headers></headers>
-    <contacts> @add-contact="addContact"</contacts>
+    <contacts></contacts>
   </div>
 </template>
 

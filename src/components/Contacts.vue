@@ -2,7 +2,7 @@
   <section class="section">
     <div class="container">
       <div class="container container__header">
-        <button class="button button-add" @click="openModal">
+        <button class="button button-add" @click="modalCreate.show = !modalCreate.show">
           <i class="bi bi-plus-circle-fill"></i>
           <p>Add Contact</p>
         </button>
@@ -44,8 +44,9 @@
                 <i class="bi bi-three-dots-vertical"></i>
               </button>
               <ul v-show="activeDots" v-bind:class="{active: activeDots}" class="dropdown-menu">
-                <li><a class="dropdown-item" href="#"><i class="bi bi-list"></i>  View</a></li>
-                <li v-on:click="removeContact(index)" ><a class="dropdown-item" href="#"><i class="bi bi-x-lg red"></i>  Delete</a></li>
+                <li @click="modalView.show = !modalView.show"><a class="dropdown-item" href="#"><i class="bi bi-list"></i>  View</a></li>
+                <li v-on:click="removeContact(index)" ><a class="dropdown-item" href="#"><i class="bi bi-x-lg red">
+                </i>  Delete</a></li>
               </ul>
             </div>
             </td>
@@ -54,80 +55,28 @@
         </table>
       </div>
     </div>
-      <div v-show="active" class="modal-dialog modal-dialog-centered">
-        <div class="modal-mask"></div>
-        <div class="modal-dialog">
-          <form @submit.prevent="onSubmit">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Create Contact</h5>
-                <button type="button" @click="closeModal" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <div class="modal-text">
-                  <div class="modal-text-name">
-                    <label>Name</label>
-                    <input type="text" v-model="name" placeholder="Please enter your name">
-                  </div>
-                  <div class="modal-text-email">
-                    <label>Email</label>
-                    <input type="text" v-model="email" placeholder="Please enter your email">
-                  </div>
-                  <div class="modal-text-adress">
-                    <label>Adress</label>
-                    <input type="text" v-model="adress" placeholder="Please enter your adress">
-                  </div>
-                </div>
-                <div class="modal-img">
-                  <img src="@/assets/img-not-found.png">
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button @click="closeModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE
-                </button>
-                <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg"></i> SAVE CHANGES</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
+    <modals title="Create" v-if="modalCreate.show" @close="modalCreate.show = false"></modals>
+    <modals title="View" v-if="modalView.show" @close="modalView.show = false"></modals>
   </section>
 </template>
 
 <script>
+import modals from './Modal'
+import dataMixin from "./dataMixin";
+
 export default {
+  mixins: [dataMixin],
+  components: { modals },
+
   data() {
     return {
-      active: false,
-      activeDots: false,
-      contacts: [
-        {
-          name: "John Doe",
-          photo: "",
-          email: "email@example.com",
-          adress: "Ukraine, Zaporozhye",
-          created: "email@example.com"
-        },
-        {
-          name: "Lone Doe",
-          photo: "",
-          email: "lmail2@example.com",
-          adress: "Ukraine, Kiev",
-          created: "email@example.com"
-        }
-      ],
-      columnsContacts: ["name", "email", "adress"],
-      selected: [],
-      selectAll: false,
-      name: '',
-      email: '',
-      adress: '',
-      nameState: null,
-      submittedNames: []
-    };
+
+    }
   },
   methods: {
+    openModal() {
+      this.active = !this.active;
+    },
     toggle() {
       this.activeDots = !this.activeDots;
     },
@@ -139,15 +88,9 @@ export default {
         }
       }
     },
-    openModal() {
-      this.active = !this.active;
-    },
-    closeModal() {
-      this.active = false;
-    },
     onSubmit() {
       if (this.name.trim() && this.email.trim() && this.adress.trim()) {
-        this.contacts.push( {
+        this.contacts.push({
           name: this.name,
           photo: "",
           email: this.email,

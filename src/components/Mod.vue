@@ -46,52 +46,12 @@
 </template>
 
 <script>
-import dataMixin from "./dataMixin";
 
 export default {
-  mixins: [dataMixin],
-  props: {
-    title: {
-      type: String,
-      required: true,
-    }
-  },
+
   data() {
     return {
-      active: false,
-      columnsContacts: ["name", "email", "adress"],
-      name: '',
-      email: '',
-      adress: '',
-      created: '',
-      nameState: null,
-      submittedNames: []
-    };
-  }
-  ,
-  methods: {
-    openModal() {
-      this.active = !this.active;
-    },
-    closeModal() {
-      this.active = false;
-    },
-    onSubmit() {
-      if (this.name.trim() && this.email.trim() && this.adress.trim()) {
-        let $Checed = {
-          name: this.name,
-          photo: "",
-          email: this.email,
-          adress: this.adress,
-          created: new Date()
-        }
-        this.contacts.push($Checed)
-        console.log(this.contacts)
-        this.name = ''
-        this.email = ''
-        this.adress = ''
-        this.$emit('close');
-      }
+
     }
   }
 }
@@ -99,65 +59,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-p {
-  margin: 0 10px;
+
+.modal- {
+
 }
 
-.modal-mask {
-  transition: opacity .3s ease;
-  background-color: rgba(00, 00, 00, .43);
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1050;
-  width: 100vw;
-  height: 100vh;
+.modal- {
+
 }
 
-.modal-dialog {
-  max-width: 700px;
-  margin: 8% 13%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1055;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  outline: 0;
-}
 
-.modal-header, .modal-footer {
-  border: none;
-}
-
-.modal-body {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modal-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.modal-img {
-  width: 140px;
-  height: 140px;
-}
-
-img {
-  max-width: 100%;
-}
-
-td img {
-  max-width: 80%;
-}
-
-input {
-  margin: 20px;
-}
 </style>

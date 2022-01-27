@@ -32,7 +32,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(contact, index) in contacts" :key="contact.name">
+          <tr v-for="(contact, index) in this.contacts" :key="contact.name">
             <th scope="row"><input type="checkbox" :value="contact.name" v-model="selected"></th>
             <td class="td-img"><img src="@/assets/img-not-found.png"></td>
             <td>{{ contact.name }}</td>
@@ -67,7 +67,6 @@ import dataMixin from "./dataMixin";
 export default {
   mixins: [dataMixin],
   components: { modals },
-
   data() {
     return {
 
@@ -121,6 +120,7 @@ export default {
 .container {
   display: block;
   margin: auto;
+  max-width: 1400px;
 }
 
 .container__content {

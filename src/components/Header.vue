@@ -57,9 +57,7 @@ export default {
   color: white;
   margin: 0 0 0 10px;
 }
-.dropdown-menu li{
-  min-width: 150px;
-}
+
 .dropdown-toggle{
   display: flex;
   align-items: center;
@@ -67,7 +65,6 @@ export default {
 }
 a {
   color: white;
-  min-width: 150px;
 }
 .dropdown-toggle::after {
   margin-left: 10px;
@@ -81,8 +78,8 @@ hr {
 .active{
   display: block;
   background: #7f4c00;
-  padding: 0 20px;
-
+  padding: 0 10px;
+  min-width: 0;
 }
 
 </style>

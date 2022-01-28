@@ -1,7 +1,7 @@
 <template>
 
     <tbody class="">
-    <tr class="" v-for="(user) in this.users" :key="user.name">
+    <tr class="" v-for="(user, index) in usersSort" :key="user.name">
       <th scope="row"><input type="checkbox" :value="user.name" v-model="selected"></th>
       <td class="td-img"><img src="@/assets/img-not-found.png"></td>
       <td>{{ user.name }}</td>
@@ -9,18 +9,18 @@
       <td>{{ user.adress }}</td>
       <td>{{ user.created }}</td>
       <td>
-        <dropdown>
+        <dropdown :users="users">
           <template v-slot:trigger>
             <button type="button" class="btn" id="dropdownMenuOffset">
               <i class="bi bi-three-dots-vertical"></i>
             </button>
           </template>
-          <div class="down-right absolute bg-black mt-2 py-2 rounded shadow text-white z-10">
-            <li><a class="dropdown-item px-2 text-xs block hover:bg-gray-900" href="#"><i
-                class="bi bi-list"></i>View</a>
+          <div class="down-right absolute mt-2 rounded text-white z-10">
+            <li @click="modalView.show = !modalView.show"><a class="dropdown-item px-2 text-xs block hover:bg-gray-900" href="#"><i
+                class="bi bi-list"></i>   View</a>
             </li>
-            <li><a class="dropdown-item px-2 text-xs block hover:bg-gray-900" href="#"><i class="bi bi-x-lg red">
-            </i> Delete</a></li>
+            <li @click="removeUser(index)"><a class="dropdown-item px-2 text-xs block border-top border-dark border-2 hover:bg-gray-900" href="#"><i class="bi bi-x-lg red">
+            </i>  Delete</a></li>
           </div>
         </dropdown>
       </td>
@@ -33,26 +33,34 @@
 <script>
 import Dropdown from './Dropdown'
 
+
 export default {
-  props: [
-    'users'
-  ],
+
+  props: ['users','selectAll','selected', 'select', 'modalView', 'usersSort'],
   components: {Dropdown},
   data() {
     return {}
+  },
+  methods: {
+    removeUser(index) {
+      this.users.splice(index, 1);
+      this.$emit('close');
+    }
   }
 }
 </script>
 
 <style>
 .down-right {
+  text-align: start;
   width: 150px;
   text-decoration: none;
   list-style-type: none;
-  background: red;
+  background-color: white;
   position: absolute;
   left: 55%;
   top: -40px;
+  border: solid 2px black;
 }
 .table-list-item {
 
@@ -64,5 +72,7 @@ export default {
 td img {
   max-width: 80%;
 }
-
+.red {
+  color: red;
+}
 </style>

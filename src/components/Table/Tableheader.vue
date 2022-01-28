@@ -2,32 +2,32 @@
 
     <thead >
     <tr >
-      <th scope="col"><input type="checkbox" v-model="selectAll" @click="select"></th>
+      <th scope="col"><input type="checkbox" ></th>
       <th scope="col"></th>
-      <th scope="col">
+      <th scope="col" >
         <div class="th-item">Name
-          <div class="icon-group">
+          <div @click="sort('name')" class="icon-group">
             <i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i>
           </div>
         </div>
       </th>
       <th scope="col">
         <div class="th-item">Email
-          <div class="icon-group">
+          <div @click="sort('email')" class="icon-group">
             <i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i>
           </div>
         </div>
       </th>
       <th scope="col">
         <div class="th-item">Adress
-          <div class="icon-group">
+          <div @click="sort('adress')" class="icon-group">
             <i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i>
           </div>
         </div>
       </th>
       <th scope="col">
         <div class="th-item">Created
-          <div class="icon-group">
+          <div @click="sort('created')" class="icon-group">
             <i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i>
           </div>
         </div>
@@ -42,9 +42,9 @@
 
 <script>
 
-
 export default {
 
+  props: ['users','selectAll','selected','select','currentSort', 'usersSort', 'sort'],
   data() {
     return {}
   }
@@ -56,6 +56,7 @@ export default {
   display: flex;
   flex-direction: column;
   color: #f1f1f1;
+  cursor: pointer;
 }
 .th-item {
   display: flex;

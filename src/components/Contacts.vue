@@ -61,11 +61,10 @@
 </template>
 
 <script>
-import modals from './Modal'
-import dataMixin from "./dataMixin";
+import modals from './Table/Modal'
 
 export default {
-  mixins: [dataMixin],
+
   components: { modals },
   data() {
     return {
@@ -104,6 +103,7 @@ export default {
     },
     removeContact(index) {
 			this.contacts.splice(index, 1);
+      this.$emit('close');
 		}
   }
 

@@ -17,6 +17,7 @@
 </template>
 <script>
 export default {
+  props: ['users'],
   data() {
     return {
       isOpen: false
@@ -28,10 +29,11 @@ export default {
 <style>
 .pop-out-quick-enter-active, .pop-out-quick-leave-active {
   transition: all .4s;
+
 }
-.pop-out-quick-enter, .pop-out-quick-leave-active {
+.pop-out-quick-enter-active, .pop-out-quick-enter,.pop-out-quick-leave, .pop-out-quick-leave-active {
   opacity: 0;
-  transform: translateY(-7px);
+  transform: translateX(7px);
 }
 
 </style>

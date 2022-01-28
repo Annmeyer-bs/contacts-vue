@@ -46,20 +46,24 @@
 </template>
 
 <script>
-import dataMixin from "./dataMixin";
+
+import localeDateMixin from "../localeDateMixin";
 
 export default {
-  mixins: [dataMixin],
+  mixins: [localeDateMixin],
+
   props: {
+    modalView:{},
+    modalCreate:{},
+    users:{},
     title: {
       type: String,
       required: true,
-    }
+    },
   },
   data() {
     return {
       active: false,
-      columnsContacts: ["name", "email", "adress"],
       name: '',
       email: '',
       adress: '',
@@ -83,10 +87,10 @@ export default {
           photo: "",
           email: this.email,
           adress: this.adress,
-          created: new Date()
+          created:localeDateMixin.computed.localeDate()
         }
-        this.contacts.push($Checed)
-        console.log(this.contacts)
+        this.users.push($Checed)
+        console.log(this.users)
         this.name = ''
         this.email = ''
         this.adress = ''

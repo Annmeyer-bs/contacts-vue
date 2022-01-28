@@ -17,7 +17,10 @@
 </template>
 
 <script>
+import localeDateMixin from "./localeDateMixin";
+
 export default {
+  mixins: [localeDateMixin],
   data() {
     return {date: new Date(),
     active: false,
@@ -28,12 +31,7 @@ export default {
       this.active = !this.active;
     }
   },
-  computed: {
-     localeDate() {
-       var options = {  year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-       return (new Date(this.date)).toLocaleDateString('en-US',options);
-     }
-  },
+
   mounted() {
     this.interval = setInterval(() => {
       this.date = new Date()

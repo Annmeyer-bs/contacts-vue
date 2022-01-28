@@ -2,20 +2,16 @@
   <div id="app">
     <headers></headers>
     <tables></tables>
-    <lines></lines>
-    <contacts></contacts>
   </div>
 </template>
 
 <script>
-import Headers from './components/Header'
-import Contacts from './components/Contacts'
-import Lines from "./components/Tablelist";
-import Tables from "./components/Table";
+import Headers from './components/Header';
+import Tables from "./components/Table/Table";
 
 export default {
   name: 'app',
-  components: {Lines, Tables, Headers, Contacts },
+  components: { Tables, Headers },
   data() {
     return {
 

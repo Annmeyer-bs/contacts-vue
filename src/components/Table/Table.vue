@@ -2,15 +2,20 @@
   <div class="container">
     <div class="d-flex flex-row justify-content-between">
       <p class="m-3">Contacts</p>
-      <buttonadd class="m-2 " :modalCreate="modalCreate"></buttonadd>
+      <div class="button d-flex">
+        <buttonadd class="m-2 " :modalCreate="modalCreate"></buttonadd>
+        <buttondelete class="m-2 " :userDeleteCheck="userDeleteCheck"></buttondelete>
+      </div>
     </div>
     <table class="table" id="sortable">
-    <tableheader :users='users' :usersSort='usersSort' :sort="sort" :selectAll="selectAll" :selected="selected" :select="select" :currentSort="currentSort"></tableheader>
-    <tablelist :users='users' :usersSort='usersSort' :selectAll="selectAll" :selected="selected" :select="select" :modalView="modalView"></tablelist>
+      <tableheader :users='users'
+                   @selectedUpdated="selectedUpdated"
+                   @listUpdated="listUpdated"></tableheader>
+      <tablelist :users='users' :selected="selected" :modalView="modalView" @selectUpdated="selectUpdated"></tablelist>
     </table>
     <modal title="Create" v-if="modalCreate.show" @close="modalCreate.show = false" :users="users"></modal>
     <modal title="View" v-if="modalView.show" @close="modalView.show = false" :users="users" :modalView="modalView">
-      <div slot="body" class="d-flex flex-row justify-content-between">
+      <div slot="body" class="modal-view">
         <div class="modal-text">
           <div class="modal-text-name">
             <label>Name</label>
@@ -35,13 +40,15 @@
 
 <script>
 import Buttonadd from "./Buttonadd";
+import Buttondelete from "./Buttondelete";
 import Tableheader from "./Tableheader";
 import Tablelist from "./Tablelist";
 import Modal from "./Modal";
 
+
 export default {
 
-  components: {Modal, Buttonadd, Tableheader, Tablelist },
+  components: {Modal, Buttonadd, Buttondelete, Tableheader, Tablelist},
   data() {
     return {
       modalCreate: {
@@ -52,6 +59,7 @@ export default {
       },
       users: [
         {
+          selected: false,
           name: "John Doe",
           photo: "",
           email: "email@example.com",
@@ -59,6 +67,7 @@ export default {
           created: "January 28, 2022, 1:45 PM"
         },
         {
+          selected: false,
           name: "Lone Doe",
           photo: "",
           email: "lmail2@example.com",
@@ -66,40 +75,38 @@ export default {
           created: "January 29, 2022, 1:55 PM"
         }
       ],
-      selected: [],
-      selectAll: false,
-      currentSort: 'name',
-      currentSortDir: 'asc'
+
+      selectAll: false
     }
   },
   computed: {
-    usersSort () {
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      return this.users.sort((a,b) => {
-        let mod =1
-        if(this.currentSortDir === 'desc') mod = -1
-        if (a[this.currentSort] < b[this.currentSort]) return -1 * mod
-        if (a[this.currentSort] > b[this.currentSort]) return 1 * mod
-        return 0
-      });
-    }
+
   },
   methods: {
-    select() {
-      this.selected = [];
-      if (!this.selectAll) {
-        for (let user in this.users) {
-          this.selected.push(this.users[user].name);
-          console.log(this.selected)
-        }
-      }
+    listUpdated(users){
+      this.users = users;
     },
-    sort(e) {
-      if(e === this.currentSort) {
-        this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc'
-      }
-      this.currentSort = e
+    selectedUpdated (selected) {
+      this.selected = selected;
+    },
+    selectUpdated (selected) {
+      this.selected = selected;
+    },
+
+    userDeleteCheck() {
+      // for (let user in selected) {
+      //   this.user.splice(user, 1);
+      // }
+      console.log(this.selected)
+      this.users.splice(this.selected, 1);
     }
+    // updateCheckAll() {
+    //   if(this.users.length == this.selected.length){
+    //     this.selectedAll = true;
+    //   }else{
+    //     this.selectedAll = false;
+    //   }
+    // }
   }
 }
 </script>
@@ -112,14 +119,23 @@ export default {
   margin: 40px auto;
   height: 400px;
 }
+
 .table {
   width: 100%;
   border-collapse: unset;
 }
+
 .table > :not(caption) > * > * {
   padding: 0;
   vertical-align: middle;
   text-align: center;
 }
 
+.modal-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
 </style>

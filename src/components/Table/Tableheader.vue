@@ -2,7 +2,7 @@
 
     <thead >
     <tr >
-      <th scope="col"><input type="checkbox" ></th>
+      <th scope="col"><input type="checkbox" v-model="selectAll" @click="select"  ></th>
       <th scope="col"></th>
       <th scope="col" >
         <div class="th-item">Name
@@ -44,9 +44,47 @@
 
 export default {
 
-  props: ['users','selectAll','selected','select','currentSort', 'usersSort', 'sort'],
+  props: ['users'],
   data() {
-    return {}
+    return {
+      currentSort: 'name',
+      currentSortDir: 'asc',
+      selected: [],
+      selectAll: false
+    }
+  },
+
+  methods: {
+    select() {
+      this.selected = [];
+      if (!this.selectAll) {
+        for (let user in this.users) {
+          this.selected.push(this.users[user].name);
+          console.log(this.selected)
+
+        }
+      }
+      this.$emit('selectedUpdated', this.selected)
+    },
+    sort(e) {
+      if (e === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc'
+      }
+      this.currentSort = e
+      this.usersSort(this.users);
+    },
+    usersSort(users) {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      users.sort((a, b) => {
+        let mod = 1
+        if (this.currentSortDir === 'desc') mod = -1
+        if (a[this.currentSort] < b[this.currentSort]) return -1 * mod
+        if (a[this.currentSort] > b[this.currentSort]) return 1 * mod
+        return 0
+      });
+
+      this.$emit('listUpdated', users)
+    }
   }
 }
 </script>

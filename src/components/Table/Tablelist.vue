@@ -1,8 +1,8 @@
 <template>
 
     <tbody class="">
-    <tr class="" v-for="(user, index) in usersSort" :key="user.name">
-      <th scope="row"><input type="checkbox" :value="user.name" v-model="selected"></th>
+    <tr class="" v-for="(user, index) in users" :key="user.name">
+      <th scope="row"><input type="checkbox" :value="user.name" v-model="selected" @click="select"></th>
       <td class="td-img"><img src="@/assets/img-not-found.png"></td>
       <td>{{ user.name }}</td>
       <td>{{ user.email }}</td>
@@ -36,17 +36,23 @@ import Dropdown from './Dropdown'
 
 export default {
 
-  props: ['users','selectAll','selected', 'select', 'modalView', 'usersSort'],
+  props: [ 'users', 'selected', 'modalView'],
   components: {Dropdown},
   data() {
-    return {}
+    return {
+
+    }
   },
   methods: {
     removeUser(index) {
       this.users.splice(index, 1);
       this.$emit('close');
+    },
+    select() {
+
+      this.$emit('selectUpdated', this.selected)
     }
-  }
+  },
 }
 </script>
 
@@ -61,9 +67,6 @@ export default {
   left: 55%;
   top: -40px;
   border: solid 2px black;
-}
-.table-list-item {
-
 }
 .td-img {
   width: 3%;

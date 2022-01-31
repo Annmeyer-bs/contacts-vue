@@ -2,6 +2,8 @@
   <div id="app">
     <headers></headers>
     <tables></tables>
+
+
   </div>
 </template>
 
@@ -9,9 +11,10 @@
 import Headers from './components/Header';
 import Tables from "./components/Table/Table";
 
+
 export default {
   name: 'app',
-  components: { Tables, Headers },
+  components: { Tables, Headers},
   data() {
     return {
 

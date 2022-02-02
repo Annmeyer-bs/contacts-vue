@@ -4,7 +4,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">{{ title }}</h5>
+            <h5 class="modal-title" id="staticBackdropLabel">{{ modalTitle }}</h5>
             <button type="button" @click="$emit('close')" class="btn-close" data-bs-dismiss="modal"
                     aria-label="Close"></button>
           </div>
@@ -14,15 +14,16 @@
                 <div class="modal-text">
                   <div class="modal-text-name">
                     <label>Name</label>
-                    <input type="text" v-model.trim="name" placeholder="Please enter your name">
+
+                    <input type="text" v-model="user.name" placeholder="Please enter your name">
                   </div>
                   <div class="modal-text-email">
                     <label>Email</label>
-                    <input type="text" v-model.trim="email" placeholder="Please enter your email">
+                    <input type="text" v-model="user.email" placeholder="Please enter your email">
                   </div>
                   <div class="modal-text-adress">
                     <label>Adress</label>
-                    <input type="text" v-model.trim="adress" placeholder="Please enter your adress">
+                    <input type="text" v-model="user.adress" placeholder="Please enter your adress">
                   </div>
                 </div>
                 <div class="modal-img">
@@ -53,10 +54,12 @@ export default {
   mixins: [localeDateMixin],
 
   props: {
-    modalView:{},
-    modalCreate:{},
-    users:{},
-    title: {
+    modalView: {},
+    modalCreate: {},
+    index: {},
+    user: {},
+    users: {},
+    modalTitle: {
       type: String,
       required: true,
     },
@@ -64,10 +67,6 @@ export default {
   data() {
     return {
       active: false,
-      name: '',
-      email: '',
-      adress: '',
-      created: '',
       nameState: null,
       submittedNames: []
     };
@@ -81,23 +80,31 @@ export default {
       this.active = false;
     },
     onSubmit() {
-      if (this.name.trim() && this.email.trim() && this.adress.trim()) {
-        let $Checed = {
-          name: this.name,
-          photo: "",
-          email: this.email,
-          adress: this.adress,
-          created:localeDateMixin.computed.localeDate()
-        }
-        this.users.push($Checed)
-        console.log(this.users)
-        this.name = ''
-        this.email = ''
-        this.adress = ''
-        this.$emit('close');
+      let $Checed = {
+        name: this.user.name,
+        photo: "",
+        email: this.user.email,
+        adress: this.user.adress,
+        created: localeDateMixin.computed.localeDate()
       }
+      console.log(this.index)
+      console.log(this.user)
+      if (this.modalTitle == 'View') {
+        console.log('View')
+        this.users.splice(this.index, 1, $Checed)
+
+      } else {
+        console.log('create')
+        this.users.push($Checed)
+      }
+
+      this.user.name = ''
+      this.user.email = ''
+      this.user.adress = ''
+      this.$emit('close')
+      this.$emit('listUpdated', this.users)
     }
-  }
+  },
 }
 </script>
 

@@ -2,7 +2,7 @@
 
     <thead >
     <tr >
-      <th scope="col"><input type="checkbox" v-model="selectAll" @click="select"  ></th>
+      <th scope="col"><input type="checkbox" v-model="selectAll" @click="select"  >{{selectAll}}</th>
       <th scope="col"></th>
       <th scope="col" >
         <div class="th-item">Name
@@ -57,15 +57,25 @@ export default {
   methods: {
     select() {
       this.selected = [];
+
       if (!this.selectAll) {
         for (let user in this.users) {
           this.selected.push(this.users[user].name);
           console.log(this.selected)
 
         }
+
       }
       this.$emit('selectedUpdated', this.selected)
     },
+    // checkall() {
+    //   if(this.users.length == this.selected.length){
+    //     this.selectAll = true;
+    //   }else{
+    //     this.selectAll = false;
+    //   }
+    //   this.$emit('updateCheckall', this.selectAll)
+    //     },
     sort(e) {
       if (e === this.currentSort) {
         this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc'

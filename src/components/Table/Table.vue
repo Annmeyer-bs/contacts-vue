@@ -1,23 +1,26 @@
 <template>
   <div class="container">
-    <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-row justify-content-between ">
       <p class="m-3">Contacts</p>
       <div class="button d-flex">
         <buttonadd class="m-2 " :modalCreate="modalCreate" :user="user"></buttonadd>
         <buttondelete class="m-2 " :userDeleteCheck="userDeleteCheck"></buttondelete>
       </div>
     </div>
+    <div><p class="msg">{{msg}}</p></div>
     <table class="table " id="sortable">
-      <tableheader :users='users' selectAll="selectAll"
-                   @selectedUpdated="selectedUpdated"
+      <tableheader :users='users' :selectAll="selectAll" :selected="selected"
+                   @selectUpdated="selectUpdated"
                    @listUpdated="listUpdated"></tableheader>
       <tablelist :users='users' :user="user" @userUpdated="userUpdated"
                  :selected="selected" @selectUpdated="selectUpdated" :selectAll="selectAll"
                  @listUpdated="listUpdated"
                  :modalView="modalView" :index="index"></tablelist>
     </table>
-    <modal modalTitle="Create" @listUpdated="listUpdated" v-if="modalCreate.show" @close="modalCreate.show = false" :users="users" :user="user" :index="index"></modal>
-    <modal modalTitle="View"  @listUpdated="listUpdated" v-if="modalView.show" @close="modalView.show = false" :users="users" :user="user" :index="index"
+    <modal modalTitle="Create" @listUpdated="listUpdated" v-if="modalCreate.show" @close="modalCreate.show = false"
+           :users="users" :user="user" :index="index"></modal>
+    <modal modalTitle="View"  @listUpdated="listUpdated" v-if="modalView.show" @close="modalView.show = false"
+           :users="users" :user="user" :index="index"
            :modalView="modalView.show">
     </modal>
   </div>
@@ -60,6 +63,7 @@ export default {
           created: "January 29, 2022, 1:55 PM"
         }
       ],
+      msg: '',
       selected: [],
       selectAll: false,
       index: '',
@@ -74,49 +78,37 @@ export default {
   },
   computed: {},
   methods: {
+    // openUpdated(isOpen) {
+    //   this.isOpen = isOpen;
+    // },
     listUpdated(users) {
       this.users = users;
     },
     userUpdated(user, index) {
       this.user = user;
       this.index = index;
-      console.log(this.user, 4)
+      this.selectAll = false
+      this.selected= []
     },
-    selectedUpdated(selected) {
+    selectUpdated(selected,selectAll) {
       this.selected = selected;
+      this.selectAll = selectAll;
     },
-    selectUpdated(selected) {
-      this.selected = selected;
-    },
-    // updateCheckall (selectAll) {
-    //   this.selectAll = selectAll;
-    // },
-
-
     userDeleteCheck() {
-      // this.users = this.users.filter(user => !user.selected)
-      // this.users.splice(this.users[i], 1);
+      if(this.selected.length == 0){
+        this.msg = 'Пожалуйста, выберите check для удаления !!!'
+      } else  {
+        this.msg = ' '
+        for (let i = 0; i < this.selected.length; i++) {
+          this.users.splice(this.selected, 1);
+        }
+        this.selected = []
+        this.selectAll = false
+      }
       for (let i = 0; i < this.selected.length; i++) {
-        //   if (this.users[i].selected === true) {
         this.users.splice(this.selected[i], 1);
       }
-      // }
-      // if (!this.selected) {
-      //   for (let user in this.selected) {
-      // this.users.splice(this.selected, 1);
-      // }
-      // }
-      console.log(this.selected)
-      //       this.$emit('listUpdated', this.users)
-      //this.users.splice(this.selected, 1);
     }
-    // updateCheckAll() {
-    //   if(this.users.length == this.selected.length){
-    //     this.selectedAll = true;
-    //   }else{
-    //     this.selectedAll = false;
-    //   }
-    // }
   }
 }
 </script>
@@ -128,6 +120,12 @@ export default {
   padding: 10px;
   margin: 40px auto;
   min-height: 400px;
+}
+.btn-text {
+  margin-bottom: 0;
+}
+p {
+  margin: 0 10px;
 }
 .table {
   width: 100%;

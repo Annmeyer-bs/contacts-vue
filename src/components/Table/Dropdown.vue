@@ -1,28 +1,35 @@
 <template>
-  <div class="dropdown">
-    <div class="dropdown-trigger" @click.prevent="isOpen = !isOpen"
-    aria-haspopup="true" :aria-expanded="isOpen">
+  <div class="dropdown" @click="hidedropdown">
+    <div class="dropdown-trigger" @click.prevent="open"
+         aria-haspopup="true" :aria-expanded="isOpen">
       <slot name="trigger"></slot>
     </div>
 
     <transition name="pop-out-quick">
-    <ul v-show="isOpen">
-      <slot>
+      <ul v-show="isOpen" class="ul down-right absolute mt-2 rounded text-white z-10">
+        <slot>
 
-      </slot>
-    </ul>
+        </slot>
+      </ul>
     </transition>
 
   </div>
 </template>
 <script>
 export default {
-  props: ['users'],
+  props: ['users', 'isOpen'],
   data() {
-    return {
-      isOpen: false
-    }
+    return {}
   },
+  methods: {
+    open() {
+      this.isOpen = !this.isOpen
+    },
+    hidedropdown() {
+      this.$emit('update:show', false)
+    }
+  }
+
 }
 </script>
 
@@ -31,9 +38,14 @@ export default {
   transition: all .4s;
 
 }
-.pop-out-quick-enter-active, .pop-out-quick-enter,.pop-out-quick-leave, .pop-out-quick-leave-active {
+
+.pop-out-quick-enter-active, .pop-out-quick-enter, .pop-out-quick-leave, .pop-out-quick-leave-active {
   opacity: 0;
   transform: translateX(7px);
+}
+
+.ul {
+  padding-left: 0;
 }
 
 </style>

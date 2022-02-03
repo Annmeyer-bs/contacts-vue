@@ -14,7 +14,6 @@
                 <div class="modal-text">
                   <div class="modal-text-name">
                     <label>Name</label>
-
                     <input type="text" v-model="user.name" placeholder="Please enter your name">
                   </div>
                   <div class="modal-text-email">
@@ -64,21 +63,15 @@ export default {
       required: true,
     },
   },
+
   data() {
     return {
-      active: false,
       nameState: null,
       submittedNames: []
     };
-  }
-  ,
+  },
+
   methods: {
-    openModal() {
-      this.active = !this.active;
-    },
-    closeModal() {
-      this.active = false;
-    },
     onSubmit() {
       let $Checed = {
         name: this.user.name,
@@ -87,17 +80,13 @@ export default {
         adress: this.user.adress,
         created: localeDateMixin.computed.localeDate()
       }
-      console.log(this.index)
-      console.log(this.user)
       if (this.modalTitle == 'View') {
         console.log('View')
         this.users.splice(this.index, 1, $Checed)
-
       } else {
         console.log('create')
         this.users.push($Checed)
       }
-
       this.user.name = ''
       this.user.email = ''
       this.user.adress = ''
@@ -113,7 +102,19 @@ export default {
 p {
   margin: 0 10px;
 }
-
+.modal-content {
+  margin: 10% 30%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 0.3rem;
+  outline: 0;
+}
 .modal-mask {
   transition: opacity .3s ease;
   background-color: rgba(00, 00, 00, .43);
@@ -123,11 +124,13 @@ p {
   z-index: 1050;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
+  pointer-events: auto;
 }
 
 .modal-dialog {
-  max-width: 700px;
-  margin: 8% 13%;
+  max-width: 1400px;
+
   position: fixed;
   top: 0;
   left: 0;

@@ -2,15 +2,12 @@
   <div id="app">
     <headers></headers>
     <tables></tables>
-<!--    <mains></mains>-->
-
   </div>
 </template>
 
 <script>
 import Headers from './components/Header';
 import Tables from "./components/Table/Table";
-// import Mains from "./components/app/Main";
 
 
 export default {
@@ -18,7 +15,6 @@ export default {
   components: { Tables, Headers},
   data() {
     return {
-
     }
   }
 }

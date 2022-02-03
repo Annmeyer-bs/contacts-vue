@@ -1,7 +1,7 @@
 <template>
     <button class="button-delete text-white d-flex flex-row align-items-center" @click="userDeleteCheck">
       <i class="bi bi-plus-circle-fill"></i>
-      <p>Delete Contact</p>
+      <p class="btn-text">Delete Contact</p>
     </button>
 </template>
 <script>
@@ -17,9 +17,5 @@ export default {
 <style>
 .button-delete {
   background-color: red;
-}
-p {
-  margin: 0 10px;
-
 }
 </style>

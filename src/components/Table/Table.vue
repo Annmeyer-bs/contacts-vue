@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <div class="d-flex flex-row justify-content-between ">
-      <p class="m-3">Contacts</p>
+      <p  v-drop="dataofModel" class="m-3">Contacts</p>
       <div class="button d-flex">
         <buttonadd class="m-2 " :modalCreate="modalCreate" :user="user"></buttonadd>
         <buttondelete class="m-2 " :userDeleteCheck="userDeleteCheck"></buttondelete>
       </div>
     </div>
-    <div><p class="msg">{{msg}}</p></div>
+    <div><p class="msg">{{ msg }}</p></div>
     <table class="table " id="sortable">
       <tableheader :users='users' :selectAll="selectAll" :selected="selected"
                    @selectUpdated="selectUpdated"
@@ -19,7 +19,7 @@
     </table>
     <modal modalTitle="Create" @listUpdated="listUpdated" v-if="modalCreate.show" @close="modalCreate.show = false"
            :users="users" :user="user" :index="index"></modal>
-    <modal modalTitle="View"  @listUpdated="listUpdated" v-if="modalView.show" @close="modalView.show = false"
+    <modal modalTitle="View" @listUpdated="listUpdated" v-if="modalView.show" @close="modalView.show = false"
            :users="users" :user="user" :index="index"
            :modalView="modalView.show">
     </modal>
@@ -39,6 +39,8 @@ export default {
   components: {Modal, Buttonadd, Buttondelete, Tableheader, Tablelist},
   data() {
     return {
+      dataOfModel: 'Test',
+      isActive: true,
       modalCreate: {
         show: false
       },
@@ -63,21 +65,27 @@ export default {
           created: "January 29, 2022, 1:55 PM"
         }
       ],
-      msg: '',
-      selected: [],
-      selectAll: false,
-      index: '',
-      user: {
-        name: '',
-        photo: '',
-        email: '',
-        adress: '',
-        created: ''
-      }
+          msg: '',
+          selected: [],
+          selectAll: false,
+          index: '',
+          user: {
+            name: '',
+            photo: '',
+            email: '',
+            adress: '',
+            created: ''
+          }
     }
   },
   computed: {},
   methods: {
+    show(){
+    this.isActive = true;
+    },
+    hide() {
+      this.isActive = false;
+    },
     // openUpdated(isOpen) {
     //   this.isOpen = isOpen;
     // },
@@ -88,16 +96,16 @@ export default {
       this.user = user;
       this.index = index;
       this.selectAll = false
-      this.selected= []
+      this.selected = []
     },
-    selectUpdated(selected,selectAll) {
+    selectUpdated(selected, selectAll) {
       this.selected = selected;
       this.selectAll = selectAll;
     },
     userDeleteCheck() {
-      if(this.selected.length == 0){
+      if (this.selected.length == 0) {
         this.msg = 'Пожалуйста, выберите check для удаления !!!'
-      } else  {
+      } else {
         this.msg = ' '
         for (let i = 0; i < this.selected.length; i++) {
           this.users.splice(this.selected, 1);
@@ -121,12 +129,15 @@ export default {
   margin: 40px auto;
   min-height: 400px;
 }
+
 .btn-text {
   margin-bottom: 0;
 }
+
 p {
   margin: 0 10px;
 }
+
 .table {
   width: 100%;
   border-collapse: unset;

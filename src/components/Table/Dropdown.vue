@@ -1,12 +1,12 @@
 <template>
   <div class="dropdown" @click="hidedropdown">
     <div class="dropdown-trigger" @click.prevent="open"
-         aria-haspopup="true" :aria-expanded="isOpen">
+         aria-haspopup="true" :aria-expanded="isActive">
       <slot name="trigger"></slot>
     </div>
 
     <transition name="pop-out-quick">
-      <ul v-show="isOpen" class="ul down-right absolute mt-2 rounded text-white z-10">
+      <ul v-show="isActive" class="ul down-right absolute mt-2 rounded text-white z-10">
         <slot>
 
         </slot>
@@ -17,13 +17,14 @@
 </template>
 <script>
 export default {
-  props: ['users', 'isOpen'],
+
+  props: ['users', 'isActive'],
   data() {
     return {}
   },
   methods: {
     open() {
-      this.isOpen = !this.isOpen
+      this.isActive = !this.isActive
     },
     hidedropdown() {
       this.$emit('update:show', false)

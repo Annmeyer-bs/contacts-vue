@@ -14,15 +14,15 @@
                 <div class="modal-text">
                   <div class="modal-text-name">
                     <label>Name</label>
-                    <input type="text" v-model="user.name" placeholder="Please enter your name">
+                    <input type="text" v-model="user.name" placeholder="Please enter your name" maxlength="30">
                   </div>
                   <div class="modal-text-email">
                     <label>Email</label>
-                    <input type="text" v-model="user.email" placeholder="Please enter your email">
+                    <input type="text" v-model="user.email" placeholder="Please enter your email" maxlength="30">
                   </div>
                   <div class="modal-text-adress">
                     <label>Adress</label>
-                    <input type="text" v-model="user.adress" placeholder="Please enter your adress">
+                    <input type="text" v-model="user.adress" placeholder="Please enter your adress" maxlength="30">
                   </div>
                 </div>
                 <div class="modal-img">

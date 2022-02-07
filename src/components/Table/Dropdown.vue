@@ -1,12 +1,11 @@
 <template>
-  <div class="dropdown" @click="hidedropdown">
-    <div class="dropdown-trigger" @click.prevent="open"
-         aria-haspopup="true" :aria-expanded="isActive">
+  <div class="dropdown" ref="dropMenu">
+    <div class="dropdown-trigger" @click="visible = !visible">
       <slot name="trigger"></slot>
     </div>
 
     <transition name="pop-out-quick">
-      <ul v-show="isActive" class="ul down-right absolute mt-2 rounded text-white z-10">
+      <ul v-show="visible" class="ul down-right absolute mt-2 rounded text-white z-10">
         <slot>
 
         </slot>
@@ -18,19 +17,29 @@
 <script>
 export default {
 
-  props: ['users', 'isActive'],
-  data() {
-    return {}
-  },
-  methods: {
-    open() {
-      this.isActive = !this.isActive
-    },
-    hidedropdown() {
-      this.$emit('update:show', false)
+  props: ['users'],
+  data(){
+    return{
+      visible:false,
     }
-  }
+  },
+  methods:{
 
+    documentClick(e){
+      let el = this.$refs.dropMenu
+      let target = e.target
+      if (( el !== target) && !el.contains(target)) {
+        this.visible=false
+      }
+    }
+  },
+  created () {
+    document.addEventListener('click', this.documentClick)
+  },
+  destroyed () {
+    // important to clean up!!
+    document.removeEventListener('click', this.documentClick)
+  }
 }
 </script>
 

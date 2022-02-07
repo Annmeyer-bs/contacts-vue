@@ -11,18 +11,18 @@
           <form @submit.prevent="onSubmit">
             <div class="modal-body">
               <slot name="body">
-                <div class="modal-text">
+                <div class="modal-text" >
                   <div class="modal-text-name">
                     <label>Name</label>
-                    <input type="text" v-model="user.name" placeholder="Please enter your name" maxlength="30">
+                    <input type="text" v-model="userInEdit.name" placeholder="Please enter your name" maxlength="30">
                   </div>
                   <div class="modal-text-email">
                     <label>Email</label>
-                    <input type="text" v-model="user.email" placeholder="Please enter your email" maxlength="30">
+                    <input type="text" v-model="userInEdit.email" placeholder="Please enter your email" maxlength="30">
                   </div>
                   <div class="modal-text-adress">
                     <label>Adress</label>
-                    <input type="text" v-model="user.adress" placeholder="Please enter your adress" maxlength="30">
+                    <input type="text" v-model="userInEdit.adress" placeholder="Please enter your adress" maxlength="30">
                   </div>
                 </div>
                 <div class="modal-img">
@@ -69,6 +69,19 @@ export default {
       nameState: null,
       submittedNames: []
     };
+  },
+  //todo investigate computed
+  computed: {
+    userInEdit: {
+      get()
+      {
+        return this.user;
+      },
+      set(data)
+      {
+        this.$emit('userUpdated', data)
+      }
+    }
   },
 
   methods: {
@@ -124,21 +137,16 @@ p {
   z-index: 1050;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
-  pointer-events: auto;
 }
 
 .modal-dialog {
   max-width: 1400px;
-
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1055;
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
   outline: 0;
 }
 

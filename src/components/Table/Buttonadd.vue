@@ -20,6 +20,7 @@ export default {
   methods: {
     create(){
       this.modalCreate.show = !this.modalCreate.show
+      this.user={}
         this.user.name = ''
         this.user.email = ''
         this.user.adress = ''

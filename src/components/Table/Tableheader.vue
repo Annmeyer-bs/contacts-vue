@@ -4,43 +4,31 @@
   <tr>
     <th scope="col"><input type="checkbox" v-model="selectAll" @click="select"></th>
     <th scope="col"></th>
-    <th scope="col" >
-      <div class="th-item" @click="sort('name')" :class="sortedClass('name')">Name
-        <div class="icon-group sorticon"
-             >
-<!--          <li v-for="(item, sortindex) in items" v-bind:key="sortindex" :class="{sortnameact:item.id == sortSelectName}"-->
-<!--              @click="sortSelectName = item.id"><i :class="item.id"  @change="sortChange"></i>-->
-<!--          </li>-->
+    <th scope="col">
+      <div class="th-item">Name
+        <div class="icon-group d-flex sort-icon">
+          <i class="fas fa-sort" @click="sort('name')" :class="sortedClass('name')"></i>
         </div>
       </div>
     </th>
     <th scope="col">
-      <div class="th-item" @click="sort('email')" :class="sortedClass('email')">Email
-        <div class="icon-group sorticon"
-             >
-<!--          <li v-for="(item, sortindex) in items" v-bind:key="sortindex" :class="{sortemailact:item.id == sortSelectEmail}"-->
-<!--              @click="sortSelectEmail = item.id"><i :class="item.id"></i>-->
-<!--          </li>-->
+      <div class="th-item">Email
+        <div class="icon-group sort-icon">
+          <i class="fas fa-sort" @click="sort('email')" :class="sortedClass('email')"></i>
         </div>
       </div>
     </th>
     <th scope="col">
-      <div class="th-item" @click="sort('adress')" :class="sortedClass('adress')">Adress
-        <div class="icon-group sorticon"
-             >
-<!--          <li v-for="(item, sortindex) in items" v-bind:key="sortindex" :class="{sortadressact:item.id == sortSelectAdress}"-->
-<!--              @click="sortSelectAdress = item.id"><i :class="item.id"></i>-->
-<!--          </li>-->
+      <div class="th-item">Adress
+        <div class="icon-group sort-icon">
+      <i class="fas fa-sort" @click="sort('adress')" :class="sortedClass('adress')"></i>
         </div>
       </div>
     </th>
     <th scope="col">
-      <div class="th-item"  @click="sort('created')" :class="sortedClass('created')" >Created
-        <div class="icon-group sorticon"
-             >
-<!--          <li v-for="(item, sortindex) in items" v-bind:key="sortindex" :class="{sortcreatedact:item.id == sortSelectCreated}"-->
-<!--              @click="sortSelectCreated = item.id"><i :class="item.id"></i>-->
-<!--          </li>-->
+      <div class="th-item">Created
+        <div class="icon-group sort-icon">
+        <i class="fas fa-sort" @click="sort('created')" :class="sortedClass('created')"></i>
         </div>
       </div>
     </th>
@@ -59,7 +47,7 @@ export default {
 
   data() {
     return {
-      currentSort: 'name',
+      currentSort: '',
       currentSortDir: 'asc',
       sortSelectName: false,
       sortSelectEmail: false,
@@ -93,7 +81,6 @@ export default {
       if (e === this.currentSort) {
         this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc'
       }
-   //   this.currentSortDir = this.currentSort=== e ? !this.currentSortDir : 'desc';
       this.currentSort = e
 
       this.usersSort(this.users);
@@ -109,8 +96,8 @@ export default {
       });
       this.$emit('listUpdated', users, this.selectAll)
     },
-    sortedClass (key) {
-      return this.currentSort === key ? `sorted ${this.currentSortDir=='asc' ? 'asc' : 'desc' }` : '';
+    sortedClass(key) {
+      return this.currentSort === key ? `${this.currentSortDir == 'asc' ? 'fa-sort-down act' : 'fa-sort-up act'}` : '';
     },
 
   }
@@ -118,6 +105,10 @@ export default {
 </script>
 
 <style>
+.fas {
+  font-size: 25px;
+}
+
 .icon-group {
   display: flex;
   flex-direction: column;
@@ -132,21 +123,14 @@ export default {
   align-items: center;
   border: none;
 }
-.sorticon {
+
+.sort-icon {
   text-decoration: none;
   list-style-type: none;
 }
-/*.sortnameact, .sortemailact, .sortadressact, .sortcreatedact {*/
-/*  color: red;*/
-/*}*/
-.asc::after {
-   display: inline-block;
-   content: '▼';
-    color: red;
- }
-.desc::after {
-   display: inline-block;
-   content: '▲';
-   color: red;
- }
+
+.act {
+  color: red;
+}
+
 </style>

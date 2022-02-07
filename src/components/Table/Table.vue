@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <div class="d-flex flex-row justify-content-between ">
-      <p  v-drop="dataofModel" class="m-3">Contacts</p>
+      <p class="m-3">Contacts</p>
       <div class="button d-flex">
-        <buttonadd class="m-2 " :modalCreate="modalCreate" :user="user"></buttonadd>
+        <buttonadd class="m-2 " :modalCreate="modalCreate" :user="user" @userUpdated="userUpdated"></buttonadd>
         <buttondelete class="m-2 " :userDeleteCheck="userDeleteCheck"></buttondelete>
       </div>
     </div>
@@ -18,8 +18,8 @@
                  :modalView="modalView" :index="index"></tablelist>
     </table>
     <modal modalTitle="Create" @listUpdated="listUpdated" v-if="modalCreate.show" @close="modalCreate.show = false"
-           :users="users" :user="user" :index="index"></modal>
-    <modal modalTitle="View" @listUpdated="listUpdated" v-if="modalView.show" @close="modalView.show = false"
+           :users="users" :user="user" :index="index" ></modal>
+    <modal modalTitle="View" @listUpdated="listUpdated" @userUpdated="userUpdated" v-if="modalView.show" @close="modalView.show = false"
            :users="users" :user="user" :index="index"
            :modalView="modalView.show">
     </modal>
@@ -34,9 +34,10 @@ import Tablelist from "./Tablelist";
 import Modal from "./Modal";
 
 
-export default {
 
-  components: {Modal, Buttonadd, Buttondelete, Tableheader, Tablelist},
+export default {
+  el: '#dire',
+  components: { Modal, Buttonadd, Buttondelete, Tableheader, Tablelist},
   data() {
     return {
       dataOfModel: 'Test',
@@ -65,30 +66,27 @@ export default {
           created: "January 29, 2022, 1:55 PM"
         }
       ],
-          msg: '',
-          selected: [],
-          selectAll: false,
-          index: '',
-          user: {
-            name: '',
-            photo: '',
-            email: '',
-            adress: '',
-            created: ''
-          }
+      msg: '',
+      selected: [],
+      selectAll: false,
+      index: '',
+      user: {
+        name: '',
+        photo: '',
+        email: '',
+        adress: '',
+        created: ''
+      }
     }
   },
   computed: {},
   methods: {
-    show(){
-    this.isActive = true;
+    show() {
+      this.isActive = true;
     },
     hide() {
       this.isActive = false;
     },
-    // openUpdated(isOpen) {
-    //   this.isOpen = isOpen;
-    // },
     listUpdated(users) {
       this.users = users;
     },

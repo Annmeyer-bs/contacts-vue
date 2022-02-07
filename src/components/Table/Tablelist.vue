@@ -22,19 +22,13 @@
         </li>
         <li @click="removeUser(index)"><a
             class="dropdown-item px-2 text-xs block border-top border-dark border-2 hover:bg-gray-900" href="#"><i
-            class="bi bi-x-lg red">
+            class="bi bi-x-lg act">
         </i> Delete</a></li>
 
       </dropdown>
 
     </td>
-    <td>
-      <div id="menu">
-        <div>
-          click outside me
-        </div>
-      </div>
-      <p></p></td>
+    <td><p></p></td>
     <td><p></p></td>
   </tr>
   </tbody>
@@ -47,7 +41,7 @@ import Dropdown from './Dropdown'
 export default {
 
   props: ['users', 'user', 'selected', 'selectAll', 'modalView'],
-  components: {Dropdown},
+  components: { Dropdown},
 
   data() {
     return {
@@ -55,12 +49,6 @@ export default {
     }
   },
   methods: {
-    // show: function() {
-    //   this.isActive = true;
-    // },
-    // hide: function() {
-    //   this.isActive = false;
-    // },
     openUpdated(isOpen) {
       this.isOpen = isOpen
     },
@@ -82,6 +70,7 @@ export default {
 
     },
     editUser(user, index) {
+      this.user = {}
       this.isOpen = false
       this.modalView.show = !this.modalView.show
       console.log(user)
@@ -125,10 +114,6 @@ tr {
 
 td img {
   max-width: 80%;
-}
-
-.red {
-  color: red;
 }
 
 #menu div {

@@ -1,7 +1,9 @@
 <template>
   <tbody class="">
   <tr class="" v-for="(user, index) in users" :key="index">
-    <th scope="row"><input type="checkbox" :value="index" v-model="selected" @change="select"></th>
+    <th scope="row">
+      <input type="checkbox" :value="index" :checked="selectedUp" v-model="selectedUp"> {{ selectedUp }}
+    </th>
     <td class="td-img"><img src="@/assets/img-not-found.png"></td>
     <td>{{ user.name }}</td>
     <td>{{ user.email }}</td>
@@ -22,7 +24,7 @@
         </li>
         <li @click="removeUser(index)"><a
             class="dropdown-item px-2 text-xs block border-top border-dark border-2 hover:bg-gray-900" href="#"><i
-            class="bi bi-x-lg act">
+            class="bi bi-x-lg red">
         </i> Delete</a></li>
 
       </dropdown>
@@ -39,13 +41,31 @@ import Dropdown from './Dropdown'
 
 
 export default {
-
   props: ['users', 'user', 'selected', 'selectAll', 'modalView'],
-  components: { Dropdown},
+  components: {Dropdown},
 
   data() {
     return {
       isActive: false
+    }
+  },
+
+  computed: {
+    selectAllUp: {
+      get() {
+        return this.selectAll;
+      },
+      set(data) {
+        this.$emit('selectAllUpdated', data)
+      }
+    },
+    selectedUp: {
+      get() {
+        return this.selected;
+      },
+      set(data) {
+        this.$emit('selectUpdated', data)
+      }
     }
   },
   methods: {
@@ -56,21 +76,20 @@ export default {
       this.users.splice(index, 1);
       this.$emit('close');
     },
-    select() {
-      console.log(this.selected)
-      //this.selected = []
-      if (this.users.length == this.selected.length) {
-        this.selectAll = true;
-      }
-      if (((this.selected.length) == 0) || !(this.users.length == this.selected.length)) {
-        this.selectAll = false;
-      }
-      this.$emit('selectUpdated', this.selected, this.selectAll)
-      console.log(this.selected)
-
-    },
+    // select() {
+    //
+    //   console.log(this.selectedUp)
+    //   if (this.users.length === this.selectedUp.length) {
+    //     this.selectAllUp = true;
+    //   } else {
+    //     this.selectAllUp = false;
+    //   }
+    //   // this.$emit('selectUpdated', this.selected)
+    //   // console.log(this.selected)
+    //
+    // },
     editUser(user, index) {
-      this.user = {}
+      // this.user = {}
       this.isOpen = false
       this.modalView.show = !this.modalView.show
       console.log(user)
@@ -126,8 +145,13 @@ td img {
   width: 200px;
   background-color: white;
 }
+
 menu div .active {
   left: 0px;
   transition: all 0.3s;
+}
+
+.red {
+  color: red;
 }
 </style>

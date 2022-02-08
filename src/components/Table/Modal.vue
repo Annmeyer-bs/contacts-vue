@@ -56,7 +56,7 @@ export default {
     modalView: {},
     modalCreate: {},
     index: {},
-    user: {},
+    user: { },
     users: {},
     modalTitle: {
       type: String,
@@ -87,10 +87,10 @@ export default {
   methods: {
     onSubmit() {
       let $Checed = {
-        name: this.user.name,
+        name: this.userInEdit.name,
         photo: "",
-        email: this.user.email,
-        adress: this.user.adress,
+        email: this.userInEdit.email,
+        adress: this.userInEdit.adress,
         created: localeDateMixin.computed.localeDate()
       }
       if (this.modalTitle == 'View') {
@@ -100,10 +100,11 @@ export default {
         console.log('create')
         this.users.push($Checed)
       }
-      this.user.name = ''
-      this.user.email = ''
-      this.user.adress = ''
+      // this.user.name = ''
+      // this.user.email = ''
+      // this.user.adress = ''
       this.$emit('close')
+      // this.$emit('userUpdated', this.user)
       this.$emit('listUpdated', this.users)
     }
   },

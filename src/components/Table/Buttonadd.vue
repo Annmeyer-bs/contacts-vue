@@ -7,12 +7,12 @@
 <script>
 export default {
   props: {
-    user: {},
     modalCreate: {},
   },
 
   data() {
     return {
+      user: {},
       isOpen: false
     }
   },
@@ -21,9 +21,6 @@ export default {
     create(){
       this.modalCreate.show = !this.modalCreate.show
       this.user={}
-        this.user.name = ''
-        this.user.email = ''
-        this.user.adress = ''
       this.$emit('userUpdated', this.user)
     }
   }

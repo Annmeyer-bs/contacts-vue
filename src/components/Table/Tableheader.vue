@@ -2,7 +2,7 @@
 
   <thead>
   <tr>
-    <th scope="col"><input type="checkbox" v-model="selectAll" @click="select"></th>
+    <th scope="col"><input type="checkbox" v-model="selectAllUp" @change="select"> {{ this.selectAllUp }} {{ this.selectedUp }}</th>
     <th scope="col"></th>
     <th scope="col">
       <div class="th-item">Name
@@ -21,14 +21,14 @@
     <th scope="col">
       <div class="th-item">Adress
         <div class="icon-group sort-icon">
-      <i class="fas fa-sort" @click="sort('adress')" :class="sortedClass('adress')"></i>
+          <i class="fas fa-sort" @click="sort('adress')" :class="sortedClass('adress')"></i>
         </div>
       </div>
     </th>
     <th scope="col">
       <div class="th-item">Created
         <div class="icon-group sort-icon">
-        <i class="fas fa-sort" @click="sort('created')" :class="sortedClass('created')"></i>
+          <i class="fas fa-sort" @click="sort('created')" :class="sortedClass('created')"></i>
         </div>
       </div>
     </th>
@@ -64,18 +64,37 @@ export default {
     }
 
   },
-
+  computed: {
+    selectAllUp: {
+      get() {
+        return this.selectAll;
+      },
+      set(data) {
+        this.$emit('selectAllUpdated', data)
+      }
+    },
+    selectedUp: {
+      get() {
+        return this.selected;
+      },
+      set(data) {
+        this.$emit('selectUpdated', data)
+      }
+    }
+  },
   methods: {
     select() {
-      if (!this.selectAll) {
-        this.selected = []
+      if (!this.selectAllUp) {
+        //this.selectedUp = []
         for (let i = 0; i < this.users.length; i++) {
-          this.selected.push(i);
+          this.selectedUp.push(i);
         }
       } else {
-        this.selected = []
+        this.selectedUp = []
       }
-      this.$emit('selectUpdated', this.selected, this.selectAll)
+      console.log(this.selectedUp)
+     // this.$emit('selectUpdated', this.selectedUp)
+     // this.$emit('selectAllUpdated', this.selectAllUp)
     },
     sort(e) {
       if (e === this.currentSort) {
@@ -94,7 +113,7 @@ export default {
         if (a[this.currentSort] > b[this.currentSort]) return 1 * mod
         return 0
       });
-      this.$emit('listUpdated', users, this.selectAll)
+      this.$emit('listUpdated', users)
     },
     sortedClass(key) {
       return this.currentSort === key ? `${this.currentSortDir == 'asc' ? 'fa-sort-down act' : 'fa-sort-up act'}` : '';
@@ -130,7 +149,7 @@ export default {
 }
 
 .act {
-  color: red;
+  color: grey;
 }
 
 </style>

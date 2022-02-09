@@ -2,7 +2,7 @@
 
   <thead>
   <tr>
-    <th scope="col"><input type="checkbox" v-model="selectAllUp" @change="select"> {{ this.selectAllUp }} {{ this.selectedUp }}</th>
+    <th scope="col"><input type="checkbox" v-model="selectAllUp" @change="select"> {{ this.selectAllUp }}</th>
     <th scope="col"></th>
     <th scope="col">
       <div class="th-item">Name
@@ -43,7 +43,7 @@
 <script>
 
 export default {
-  props: ['users', 'selectAll', 'selected'],
+  props: ['users', 'selectAll'],
 
   data() {
     return {
@@ -73,28 +73,18 @@ export default {
         this.$emit('selectAllUpdated', data)
       }
     },
-    selectedUp: {
-      get() {
-        return this.selected;
-      },
-      set(data) {
-        this.$emit('selectUpdated', data)
-      }
-    }
   },
   methods: {
     select() {
       if (!this.selectAllUp) {
-        //this.selectedUp = []
-        for (let i = 0; i < this.users.length; i++) {
-          this.selectedUp.push(i);
-        }
+      this.users.forEach(function (user) {
+        user.selected=true
+      })
       } else {
-        this.selectedUp = []
+        this.users.forEach(function (user) {
+          user.selected=false
+        })
       }
-      console.log(this.selectedUp)
-     // this.$emit('selectUpdated', this.selectedUp)
-     // this.$emit('selectAllUpdated', this.selectAllUp)
     },
     sort(e) {
       if (e === this.currentSort) {

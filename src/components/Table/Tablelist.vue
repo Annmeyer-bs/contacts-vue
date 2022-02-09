@@ -2,7 +2,7 @@
   <tbody class="">
   <tr class="" v-for="(user, index) in users" :key="index">
     <th scope="row">
-      <input type="checkbox" :value="index" :checked="selectedUp" v-model="selectedUp"> {{ selectedUp }}
+      <input type="checkbox" :value="index" v-model="user.selected"> {{ user.selected}}
     </th>
     <td class="td-img"><img src="@/assets/img-not-found.png"></td>
     <td>{{ user.name }}</td>
@@ -41,7 +41,7 @@ import Dropdown from './Dropdown'
 
 
 export default {
-  props: ['users', 'user', 'selected', 'selectAll', 'modalView'],
+  props: ['users', 'user', 'selectAll', 'modalView'],
   components: {Dropdown},
 
   data() {
@@ -51,20 +51,12 @@ export default {
   },
 
   computed: {
-    selectAllUp: {
+    selectUser: {
       get() {
-        return this.selectAll;
+        return this.user.select;
       },
       set(data) {
-        this.$emit('selectAllUpdated', data)
-      }
-    },
-    selectedUp: {
-      get() {
-        return this.selected;
-      },
-      set(data) {
-        this.$emit('selectUpdated', data)
+        this.$emit('selectUserUp', data)
       }
     }
   },

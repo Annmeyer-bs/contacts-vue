@@ -67,7 +67,8 @@ export default {
   data() {
     return {
       nameState: null,
-      submittedNames: []
+      submittedNames: [],
+      nextTodoId: 5
     };
   },
   //todo investigate computed
@@ -87,6 +88,9 @@ export default {
   methods: {
     onSubmit() {
       let $Checed = {
+        // id: this.nextTodoId++,
+        id: (Math.random() * 1000).toFixed(0).toString(),
+        selected: false,
         name: this.userInEdit.name,
         photo: "",
         email: this.userInEdit.email,
@@ -100,9 +104,9 @@ export default {
         console.log('create')
         this.users.push($Checed)
       }
-      // this.user.name = ''
-      // this.user.email = ''
-      // this.user.adress = ''
+      this.userInEdit.name = ''
+      this.userInEdit.email = ''
+      this.userInEdit.adress = ''
       this.$emit('close')
       // this.$emit('userUpdated', this.user)
       this.$emit('listUpdated', this.users)

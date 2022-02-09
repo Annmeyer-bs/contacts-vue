@@ -3,24 +3,25 @@
     <div class="d-flex flex-row justify-content-between ">
       <p class="m-3">Contacts</p>
       <div class="button d-flex">
-        <buttonadd class="m-2 " :modalCreate="modalCreate"  @userUpdated="userUpdated"></buttonadd>
+        <buttonadd class="m-2 " :modalCreate="modalCreate" @userUpdated="userUpdated"></buttonadd>
         <buttondelete class="m-2 " :userDeleteCheck="userDeleteCheck"></buttondelete>
       </div>
     </div>
-    <div><p class="msg">{{ msg }}</p></div>
+    <div><p class="msg">{{ this.msg }}</p></div>
     <table class="table " id="sortable">
-      <tableheader :users='users' :selectAll="selectAll" :selected="selected"
-                   @selectUpdated="selectUpdated" @selectAllUpdated="selectAllUpdated"
+      <tableheader :users='users' :selectAll="selectAll"
+                   @selectUserUp="selectUserUp" @selectAllUpdated="selectAllUpdated"
                    @listUpdated="listUpdated"></tableheader>
       <tablelist :users='users' :user="user" @userUpdated="userUpdated"
-                 :selected="selected" @selectUpdated="selectUpdated" :selectAll="selectAll"
-                 @listUpdated="listUpdated"  @selectAllUpdated="selectAllUpdated"
+                 @selectUserUp="selectUserUp" :selectAll="selectAll"
+                 @listUpdated="listUpdated" @selectAllUpdated="selectAllUpdated"
                  :modalView="modalView" :index="index"></tablelist>
     </table>
     <modal modalTitle="Create" @listUpdated="listUpdated" v-if="modalCreate.show" @close="modalCreate.show = false"
            :users="users" :user="user" @userUpdated="userUpdated"
-           :index="index" ></modal>
-    <modal modalTitle="View" @listUpdated="listUpdated" @userUpdated="userUpdated" v-if="modalView.show" @close="modalView.show = false"
+           :index="index"></modal>
+    <modal modalTitle="View" @listUpdated="listUpdated" @userUpdated="userUpdated" v-if="modalView.show"
+           @close="modalView.show = false"
            :users="users" :user="user"
            :index="index"
            :modalView="modalView.show">
@@ -36,9 +37,8 @@ import Tablelist from "./Tablelist";
 import Modal from "./Modal";
 
 
-
 export default {
-  components: { Modal, Buttonadd, Buttondelete, Tableheader, Tablelist},
+  components: {Modal, Buttonadd, Buttondelete, Tableheader, Tablelist},
   data() {
     return {
       dataOfModel: 'Test',
@@ -50,23 +50,13 @@ export default {
         show: false
       },
       users: [
-        {
-          name: "John Doe",
-          photo: "",
-          email: "email@example.com",
-          adress: "Ukraine, Zaporozhye",
-          created: "January 28, 2022, 1:45 PM"
-        },
-        {
-          name: "Lone Doe",
-          photo: "",
-          email: "lmail2@example.com",
-          adress: "Ukraine, Kharkiv",
-          created: "January 29, 2022, 1:55 PM"
-        }
+        { id:1, selected: false, name: "John Doe", photo: "", email: "email@example.com", adress: "Ukraine, Zaporozhye", created: "January 28, 2022, 1:45 PM" },
+        { id:2, selected: false, name: "Lone Doe", photo: "", email: "lmail2@example.com", adress: "Ukraine, Kharkiv", created: "January 29, 2022, 1:55 PM" },
+        { id:3, selected: false, name: "John Doe", photo: "", email: "email@example.com", adress: "Ukraine, Zaporozhye", created: "January 28, 2022, 1:45 PM" },
+        { id:4, selected: false, name: "Lone Doe", photo: "", email: "lmail2@example.com", adress: "Ukraine, Kharkiv", created: "January 29, 2022, 1:55 PM" }
       ],
       msg: '',
-      selected: [],
+       mr: {},
       selectAll: false,
       index: '',
       user: {
@@ -95,27 +85,49 @@ export default {
       // this.selectAll = false
       // this.selected = []
     },
-    selectUpdated(selected) {
-      this.selected = selected;
+    selectUserUp(selected) {
+      this.user.select = selected;
     },
     selectAllUpdated(selectAll) {
       this.selectAll = selectAll;
     },
     userDeleteCheck() {
-      if (this.selected.length === 0) {
-        this.msg = 'Пожалуйста, выберите check для удаления !!!'
-      } else {
-        this.msg = ' '
-        for (let i = 0; i < this.selected.length; i++) {
-          this.users.splice(this.selected, 1);
+      // for (let i = 0; i < this.users.length; i++) {
+      //   if (this.users[i].selected === true) {
+      //     console.log(this.users[i])
+      //     console.log(i)
+      //     this.users.splice(i, 1);
+      //   }
+      // }
+      for (let i = 0; i < this.users.length; i++) {
+        if (this.users[i].selected === true) {
+          this.msg = 'Please select to remove!!!'
+        } else {
+          this.msg = ' '
+          console.log(this.users[i])
+          console.log(this.users[i].id)
+          this.users.splice(i, 1);
+            //   for (let i = 0; i < this.selected.length; i++) {
+            //     this.users.splice(this.selected, 1);
+              }
+      //  this.users.splice(this.mr[i], 1);
+            //   this.selected = []
+            //   this.selectAll = false
+
+          //       //     console.log(this.users[i])
+          // //     console.log(i)
+          //for (let i = 0; i < this.users.length; i++) {
+          // this.users.splice(this.users[i], 1);
+          // }
         }
-        this.selected = []
-        this.selectAll = false
-      }
-      for (let i = 0; i < this.selected.length; i++) {
-        this.users.splice(this.selected[i], 1);
-      }
+      // this.users.forEach(function (value, key){
+      //   if (value.selected === false){
+      //     this.msg = 'Please select to remove!!!'
+      //   } else {
+      //     this.msg = ' '
+      //   }
     }
+
   }
 }
 </script>

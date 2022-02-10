@@ -4,7 +4,7 @@
       <p class="m-3">Contacts</p>
       <div class="button d-flex">
         <buttonadd class="m-2 " :modalCreate="modalCreate" @userUpdated="userUpdated"></buttonadd>
-        <buttondelete class="m-2 " :userDeleteCheck="userDeleteCheck"></buttondelete>
+        <buttondelete class="m-2 " @click="deleteUsers"></buttondelete>
       </div>
     </div>
     <div><p class="msg">{{ this.msg }}</p></div>
@@ -50,13 +50,45 @@ export default {
         show: false
       },
       users: [
-        { id:1, selected: false, name: "John Doe", photo: "", email: "email@example.com", adress: "Ukraine, Zaporozhye", created: "January 28, 2022, 1:45 PM" },
-        { id:2, selected: false, name: "Lone Doe", photo: "", email: "lmail2@example.com", adress: "Ukraine, Kharkiv", created: "January 29, 2022, 1:55 PM" },
-        { id:3, selected: false, name: "John Doe", photo: "", email: "email@example.com", adress: "Ukraine, Zaporozhye", created: "January 28, 2022, 1:45 PM" },
-        { id:4, selected: false, name: "Lone Doe", photo: "", email: "lmail2@example.com", adress: "Ukraine, Kharkiv", created: "January 29, 2022, 1:55 PM" }
+        {
+          id: 1,
+          selected: false,
+          name: "John Doe",
+          photo: "",
+          email: "email@example.com",
+          adress: "Ukraine, Zaporozhye",
+          created: "January 28, 2022, 1:45 PM"
+        },
+        {
+          id: 2,
+          selected: false,
+          name: "Lone Doe",
+          photo: "",
+          email: "lmail2@example.com",
+          adress: "Ukraine, Kharkiv",
+          created: "January 29, 2022, 1:55 PM"
+        },
+        {
+          id: 3,
+          selected: false,
+          name: "Anny Doe",
+          photo: "",
+          email: "email@example.com",
+          adress: "Ukraine, Zaporozhye",
+          created: "January 28, 2022, 1:45 PM"
+        },
+        {
+          id: 4,
+          selected: false,
+          name: "Leo Doe",
+          photo: "",
+          email: "lmail2@example.com",
+          adress: "Ukraine, Kharkiv",
+          created: "January 29, 2022, 1:55 PM"
+        }
       ],
       msg: '',
-       mr: {},
+      mr: {},
       selectAll: false,
       index: '',
       user: {
@@ -82,8 +114,7 @@ export default {
     userUpdated(user, index) {
       this.user = user;
       this.index = index;
-      // this.selectAll = false
-      // this.selected = []
+      this.users.push(user);
     },
     selectUserUp(selected) {
       this.user.select = selected;
@@ -91,41 +122,14 @@ export default {
     selectAllUpdated(selectAll) {
       this.selectAll = selectAll;
     },
-    userDeleteCheck() {
-      // for (let i = 0; i < this.users.length; i++) {
-      //   if (this.users[i].selected === true) {
-      //     console.log(this.users[i])
-      //     console.log(i)
-      //     this.users.splice(i, 1);
-      //   }
-      // }
-      for (let i = 0; i < this.users.length; i++) {
-        if (this.users[i].selected === true) {
-          this.msg = 'Please select to remove!!!'
-        } else {
-          this.msg = ' '
-          console.log(this.users[i])
-          console.log(this.users[i].id)
-          this.users.splice(i, 1);
-            //   for (let i = 0; i < this.selected.length; i++) {
-            //     this.users.splice(this.selected, 1);
-              }
-      //  this.users.splice(this.mr[i], 1);
-            //   this.selected = []
-            //   this.selectAll = false
-
-          //       //     console.log(this.users[i])
-          // //     console.log(i)
-          //for (let i = 0; i < this.users.length; i++) {
-          // this.users.splice(this.users[i], 1);
-          // }
+    //todo почитать области видимости
+    //найти топ самых используемых методов в js и знать их, в том числе работа с массивами и обьектами
+    deleteUsers() {
+      this.users = this.users.filter(user => {
+        if (user.selected === false) {
+          return user;
         }
-      // this.users.forEach(function (value, key){
-      //   if (value.selected === false){
-      //     this.msg = 'Please select to remove!!!'
-      //   } else {
-      //     this.msg = ' '
-      //   }
+      });
     }
 
   }

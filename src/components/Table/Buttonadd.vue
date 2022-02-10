@@ -20,8 +20,8 @@ export default {
   methods: {
     create(){
       this.modalCreate.show = !this.modalCreate.show
-      this.user={}
-      this.$emit('userUpdated', this.user)
+      // this.user={}
+      // this.$emit('userUpdated', this.user)
     }
   }
 }

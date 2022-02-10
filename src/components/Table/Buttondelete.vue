@@ -1,12 +1,12 @@
 <template>
-    <button class="button-delete text-white d-flex flex-row align-items-center" @click="userDeleteCheck">
+    <button class="button-delete text-white d-flex flex-row align-items-center" @click="$emit('click')">
       <i class="bi bi-plus-circle-fill"></i>
       <p class="btn-text">Delete Contact</p>
     </button>
 </template>
 <script>
 export default {
-  props:['userDeleteCheck'],
+
   data() {
     return {
     }

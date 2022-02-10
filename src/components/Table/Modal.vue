@@ -98,7 +98,7 @@ export default {
         created: localeDateMixin.computed.localeDate()
       }
       if (this.modalTitle == 'View') {
-        console.log('View')
+        console.log('View',)
         this.users.splice(this.index, 1, $Checed)
       } else {
         console.log('create')

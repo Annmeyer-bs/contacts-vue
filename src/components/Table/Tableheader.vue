@@ -2,7 +2,7 @@
 
   <thead>
   <tr>
-    <th scope="col"><input type="checkbox" v-model="selectAllUp" @change="select"> {{ this.selectAllUp }}</th>
+    <th scope="col"><input type="checkbox" v-model="selectAllUp" @change="select"></th>
     <th scope="col"></th>
     <th scope="col">
       <div class="th-item">Name
@@ -49,20 +49,7 @@ export default {
     return {
       currentSort: '',
       currentSortDir: 'asc',
-      sortSelectName: false,
-      sortSelectEmail: false,
-      sortSelectAdress: undefined,
-      sortSelectCreated: undefined,
-      items: [
-        {
-          id: 'bi bi-caret-up-fill'
-        },
-        {
-          id: 'bi bi-caret-down-fill'
-        }
-      ]
     }
-
   },
   computed: {
     selectAllUp: {
@@ -95,7 +82,6 @@ export default {
       this.usersSort(this.users);
     },
     usersSort(users) {
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
       users.sort((a, b) => {
         let mod = 1
         if (this.currentSortDir === 'desc') mod = -1
@@ -106,9 +92,8 @@ export default {
       this.$emit('listUpdated', users)
     },
     sortedClass(key) {
-      return this.currentSort === key ? `${this.currentSortDir == 'asc' ? 'fa-sort-down act' : 'fa-sort-up act'}` : '';
-    },
-
+      return this.currentSort === key ? `${this.currentSortDir === 'asc' ? 'fa-sort-down act' : 'fa-sort-up act'}` : '';
+    }
   }
 }
 </script>

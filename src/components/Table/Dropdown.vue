@@ -17,14 +17,12 @@
 <script>
 export default {
 
-  props: ['users'],
   data(){
     return{
       visible:false,
     }
   },
   methods:{
-
     documentClick(e){
       let el = this.$refs.dropMenu
       let target = e.target
@@ -46,16 +44,12 @@ export default {
 <style>
 .pop-out-quick-enter-active, .pop-out-quick-leave-active {
   transition: all .4s;
-
 }
-
 .pop-out-quick-enter-active, .pop-out-quick-enter, .pop-out-quick-leave, .pop-out-quick-leave-active {
   opacity: 0;
   transform: translateX(7px);
 }
-
 .ul {
   padding-left: 0;
 }
-
 </style>

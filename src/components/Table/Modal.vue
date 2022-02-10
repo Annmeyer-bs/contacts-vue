@@ -56,7 +56,7 @@ export default {
     modalView: {},
     modalCreate: {},
     index: {},
-    user: { },
+    user: {},
     users: {},
     modalTitle: {
       type: String,
@@ -66,12 +66,9 @@ export default {
 
   data() {
     return {
-      nameState: null,
-      submittedNames: [],
-      nextTodoId: 5
     };
   },
-  //todo investigate computed
+
   computed: {
     userInEdit: {
       get()
@@ -88,8 +85,6 @@ export default {
   methods: {
     onSubmit() {
       let $Checed = {
-        // id: this.nextTodoId++,
-        id: (Math.random() * 1000).toFixed(0).toString(),
         selected: false,
         name: this.userInEdit.name,
         photo: "",
@@ -97,18 +92,12 @@ export default {
         adress: this.userInEdit.adress,
         created: localeDateMixin.computed.localeDate()
       }
-      if (this.modalTitle == 'View') {
-        console.log('View',)
+      if (this.modalTitle === 'View') {
         this.users.splice(this.index, 1, $Checed)
       } else {
-        console.log('create')
         this.users.push($Checed)
       }
-      this.userInEdit.name = ''
-      this.userInEdit.email = ''
-      this.userInEdit.adress = ''
       this.$emit('close')
-      // this.$emit('userUpdated', this.user)
       this.$emit('listUpdated', this.users)
     }
   },

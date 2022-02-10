@@ -12,14 +12,13 @@
       <tableheader :users='users' :selectAll="selectAll"
                    @selectUserUp="selectUserUp" @selectAllUpdated="selectAllUpdated"
                    @listUpdated="listUpdated"></tableheader>
-      <tablelist :users='users' :user="user" @userUpdated="userUpdated"
-                 @selectUserUp="selectUserUp" :selectAll="selectAll"
-                 @listUpdated="listUpdated" @selectAllUpdated="selectAllUpdated"
-                 :modalView="modalView" :index="index"></tablelist>
+      <tablelist :users='users' :user="user"
+                 @userUpdated="userUpdated" @selectUserUp="selectUserUp"
+                 :modalView="modalView"></tablelist>
     </table>
     <modal modalTitle="Create" @listUpdated="listUpdated" v-if="modalCreate.show" @close="modalCreate.show = false"
            :users="users" :user="user" @userUpdated="userUpdated"
-           :index="index"></modal>
+           ></modal>
     <modal modalTitle="View" @listUpdated="listUpdated" @userUpdated="userUpdated" v-if="modalView.show"
            @close="modalView.show = false"
            :users="users" :user="user"
@@ -41,7 +40,6 @@ export default {
   components: {Modal, Buttonadd, Buttondelete, Tableheader, Tablelist},
   data() {
     return {
-      dataOfModel: 'Test',
       isActive: true,
       modalCreate: {
         show: false
@@ -51,7 +49,6 @@ export default {
       },
       users: [
         {
-          id: 1,
           selected: false,
           name: "John Doe",
           photo: "",
@@ -60,7 +57,6 @@ export default {
           created: "January 28, 2022, 1:45 PM"
         },
         {
-          id: 2,
           selected: false,
           name: "Lone Doe",
           photo: "",
@@ -69,7 +65,6 @@ export default {
           created: "January 29, 2022, 1:55 PM"
         },
         {
-          id: 3,
           selected: false,
           name: "Anny Doe",
           photo: "",
@@ -78,29 +73,47 @@ export default {
           created: "January 28, 2022, 1:45 PM"
         },
         {
-          id: 4,
           selected: false,
           name: "Leo Doe",
           photo: "",
           email: "lmail2@example.com",
           adress: "Ukraine, Kharkiv",
           created: "January 29, 2022, 1:55 PM"
-        }
+        },
+        {
+          selected: false,
+          name: "John Doe",
+          photo: "",
+          email: "email@example.com",
+          adress: "Ukraine, Zaporozhye",
+          created: "January 28, 2022, 1:45 PM"
+        },
+        {
+          selected: false,
+          name: "Lone Doe",
+          photo: "",
+          email: "lmail2@example.com",
+          adress: "Ukraine, Kharkiv",
+          created: "January 29, 2022, 1:55 PM"
+        },
+        {
+          selected: false,
+          name: "Anny Doe",
+          photo: "",
+          email: "email@example.com",
+          adress: "Ukraine, Zaporozhye",
+          created: "January 28, 2022, 1:45 PM"
+        },
       ],
       msg: '',
-      mr: {},
       selectAll: false,
       index: '',
-      user: {
-        // name: '',
-        // photo: '',
-        // email: '',
-        // adress: '',
-        // created: ''
-      }
+      user: {}
     }
   },
+
   computed: {},
+
   methods: {
     show() {
       this.isActive = true;
@@ -114,7 +127,6 @@ export default {
     userUpdated(user, index) {
       this.user = user;
       this.index = index;
-      this.users.push(user);
     },
     selectUserUp(selected) {
       this.user.select = selected;
@@ -164,11 +176,4 @@ p {
   text-align: center;
 }
 
-.modal-view {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
 </style>

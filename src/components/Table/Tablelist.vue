@@ -2,7 +2,7 @@
   <tbody class="">
   <tr class="" v-for="(user, index) in users" :key="index">
     <th scope="row">
-      <input type="checkbox" :value="index" v-model="user.selected"> {{ user.selected}}
+      <input type="checkbox" :value="index" v-model="user.selected">
     </th>
     <td class="td-img"><img src="@/assets/img-not-found.png"></td>
     <td>{{ user.name }}</td>
@@ -10,14 +10,14 @@
     <td>{{ user.adress }}</td>
     <td>{{ user.created }}</td>
     <td>
-      <dropdown :users="users" :isOpen="isActive">
+      <dropdown>
         <template v-slot:trigger>
           <button type="button" class="btn" id="dropdownMenuOffset">
             <i class="bi bi-three-dots-vertical"></i>
           </button>
         </template>
 
-        <li @click="editUser(user,index)" @openUpdated="openUpdated"><a
+        <li @click="editUser(user,index)"><a
             class="dropdown-item px-2 text-xs block hover:bg-gray-900"
             href="#"><i
             class="bi bi-list"></i> View</a>
@@ -28,20 +28,18 @@
         </i> Delete</a></li>
 
       </dropdown>
-
     </td>
     <td><p></p></td>
     <td><p></p></td>
   </tr>
   </tbody>
-
 </template>
 <script>
 import Dropdown from './Dropdown'
 
 
 export default {
-  props: ['users', 'user', 'selectAll', 'modalView'],
+  props: ['users', 'user', 'modalView'],
   components: {Dropdown},
 
   data() {
@@ -61,39 +59,14 @@ export default {
     }
   },
   methods: {
-    openUpdated(isOpen) {
-      this.isOpen = isOpen
-    },
     removeUser(index) {
       this.users.splice(index, 1);
-      this.$emit('close');
     },
-    // select() {
-    //
-    //   console.log(this.selectedUp)
-    //   if (this.users.length === this.selectedUp.length) {
-    //     this.selectAllUp = true;
-    //   } else {
-    //     this.selectAllUp = false;
-    //   }
-    //   // this.$emit('selectUpdated', this.selected)
-    //   // console.log(this.selected)
-    //
-    // },
     editUser(user, index) {
-      // this.user = {}
-      this.isOpen = false
       this.modalView.show = !this.modalView.show
-      console.log(user)
-      this.user.name = user.name
-      this.user.email = user.email
-      this.user.adress = user.adress
-      console.log(user)
-      this.$emit('openUpdated', this.isOpen)
       this.$emit('userUpdated', user, index)
     }
   }
-
 }
 </script>
 

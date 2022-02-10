@@ -13,15 +13,14 @@ export default {
   data() {
     return {
       user: {},
-      isOpen: false
     }
   },
 
   methods: {
     create(){
       this.modalCreate.show = !this.modalCreate.show
-      // this.user={}
-      // this.$emit('userUpdated', this.user)
+       this.user={}
+       this.$emit('userUpdated', this.user)
     }
   }
 }
